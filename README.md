@@ -34,7 +34,7 @@ proxies+:
 
 proxy-groups+:
   - name: aTrust
-    type: select
+    type: fallback
     proxies:
       - socks5
     # 自动保活，每 60s 访问一次 url，url 需要是可访问的、需要 aTrust 认证的地址。
