@@ -1,0 +1,26 @@
+name: atrust-autologin
+services:
+    docker-atrust:
+        restart: unless-stopped
+        devices:
+            - /dev/net/tun
+        cap_add:
+            - NET_ADMIN
+        tty: true
+        stdin_open: true
+        environment:
+            - PASSWORD=xxxx
+            - URLWIN=1
+        volumes:
+            - $HOME/.atrust-data:/root
+        ports:
+            # vnc
+            - 127.0.0.1:5901:5901
+            # socks
+            - 127.0.0.1:1080:1080
+            # http
+            - 127.0.0.1:8888:8888
+            - 127.0.0.1:54631:54631
+        sysctls:
+            - net.ipv4.conf.default.route_localnet=1
+        image: hagb/docker-atrust
