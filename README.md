@@ -1,6 +1,6 @@
 # Linux 下使用 aTrust
 
-## 使用 docker 启动 aTrust：
+## 使用 docker 启动 aTrust
 
 > 后续会随 docker 启动，无需再次执行此命令
 
@@ -34,12 +34,11 @@ proxies+:
 
 proxy-groups+:
   - name: aTrust
-    type: fallback
+    type: url-test
     proxies:
       - socks5
-    # 自动保活，每 60s 访问一次 url，url 需要是可访问的、需要 aTrust 认证的地址。
-    # interval: 60
-    # url: http://xxx
+    interval: 60
+    url: http://172.25.23.186:8080
 
 +rules:
   - IP-CIDR,172.25.0.0/16,aTrust
@@ -50,5 +49,5 @@ proxy-groups+:
 **覆写说明：**
 
 - 追加了一个新的 socks5 节点，这是 docker 容器暴露出来的 socks 节点。
-- 追加了一个新的代理组：aTrust。如果需要自动保活，可以取消注释部分。
+- 追加了一个新的代理组：aTrust。使用 url-test 类型，定期检测延迟，目的是保活。
 - 追加了一个分流规则，172.25.0.0/16 走 aTrust 分组，这个 ip 段可能需要根据实际情况修改。
